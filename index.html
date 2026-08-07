@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS Bhayangkara Akademi Kepolisian</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            DEFAULT: '#FAFAEE',
+                            light: '#FCFDF7',
+                        },
+                        maroon: {
+                            DEFAULT: '#B81414',
+                            hover: '#9E0E0E',
+                            light: '#FFF5F5',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #printable-area, #printable-area * { visibility: visible; }
+            #printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body class="bg-cream dark:bg-gray-900 font-sans text-gray-800 dark:text-gray-100 antialiased flex flex-col min-h-screen transition-colors duration-300">
+
+    <!-- NAVBAR (Hidden saat di tampilan Admin Fullscreen) -->
+    <header id="main-header" class="bg-white dark:bg-gray-800 sticky top-0 z-50 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <!-- Logo RS Bhayangkara -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('home')">
+                <div class="w-10 h-10 flex-shrink-0">
+                    <img src="logo-akpol.png" alt="Logo RS Bhayangkara" style="height: 40px; width: auto;">
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-gray-900 dark:text-white leading-tight">RS Bhayangkara</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Akademi Kepolisian</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-semibold text-gray-600 dark:text-gray-300">
+                <button onclick="showPage('home')" id="nav-home" class="nav-link text-maroon border-b-2 border-maroon pb-1">Home</button>
+                
+                <!-- Dropdown Profil -->
+                <div class="relative group">
+                    <button id="nav-profil" class="nav-link hover:text-maroon transition flex items-center space-x-1 py-2">
+                        <span>Profil</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="absolute left-0 mt-0 w-48 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg py-2 hidden group-hover:block transition-all z-50">
+                        <button onclick="showPage('profil', 'sejarah')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Sejarah Singkat</button>
+                        <button onclick="showPage('profil', 'visimisi')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Visi & Misi</button>
+                        <button onclick="showPage('profil', 'struktur')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Struktur Organisasi</button>
+                    </div>
+                </div>
+
+                <!-- Dropdown Layanan -->
+                <div class="relative group">
+                    <button id="nav-layanan" class="nav-link hover:text-maroon transition flex items-center space-x-1 py-2">
+                        <span>Layanan</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="absolute left-0 mt-0 w-52 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg py-2 hidden group-hover:block transition-all z-50">
+                        <a href="#layanan" onclick="showPage('home')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Rawat Inap</a>
+                        <a href="#layanan" onclick="showPage('home')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">IGD 24 Jam</a>
+                        <a href="#layanan" onclick="showPage('home')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Medical Check Up (MCU)</a>
+                        <a href="#fasilitas" onclick="showPage('home')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Fasilitas Penunjang</a>
+                    </div>
+                </div>
+                
+                <!-- Dropdown Informasi Pasien -->
+                <div class="relative group">
+                    <button id="nav-informasi" class="nav-link hover:text-maroon transition flex items-center space-x-1 py-2">
+                        <span>Informasi Pasien</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="absolute left-0 mt-0 w-52 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg py-2 hidden group-hover:block transition-all z-50">
+                        <button onclick="showPage('informasi', 'jadwal')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Jadwal Dokter</button>
+                        <button onclick="showPage('informasi', 'pendaftaran')" class="block w-full text-left px-4 py-2 text-xs text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-700 hover:text-maroon font-medium">Pendaftaran Online</button>
+                    </div>
+                </div>
+
+                <a href="#fasilitas" onclick="showPage('home', 'fasilitas')" class="hover:text-maroon transition">Fasilitas</a>
+                <a href="#berita" onclick="showPage('home', 'berita')" class="hover:text-maroon transition">Berita</a>
+                <a href="#kontak" onclick="showPage('home', 'kontak')" class="hover:text-maroon transition">Hubungi Kami</a>
+                <a href="#pengaduan" onclick="showPage('home', 'pengaduan')" class="hover:text-maroon transition">Pengaduan</a>
+            </nav>
+
+            <!-- Action Button / Login Tunggal + Dark Mode Toggle -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition" title="Ganti Mode Tampilan">
+                    <i data-lucide="moon" id="icon-dark-mode" class="w-4 h-4"></i>
+                </button>
+                <button id="btn-portal-toggle" onclick="handleAuthButtonClick()" class="bg-maroon hover:bg-maroon-hover text-white px-5 py-2.5 rounded-xl font-semibold text-sm flex items-center space-x-2 transition shadow-md shadow-red-100 dark:shadow-none">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                    <span id="txt-portal-btn">Masuk / Login</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- ==================== VIEW 1: HOME PAGE ==================== -->
+        <div id="view-home" class="space-y-16 pb-16">
+            
+            <!-- HERO SECTION -->
+            <section id="home" class="relative overflow-hidden bg-cream dark:bg-gray-900 pt-8 pb-12 transition-colors duration-300">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-6 space-y-6 z-10">
+                        <div class="inline-flex items-center space-x-2 bg-maroon-light dark:bg-red-950/40 border border-red-100 dark:border-red-900/50 px-3 py-1.5 rounded-full">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-maroon"></i>
+                            <span class="text-xs font-bold text-maroon tracking-wide uppercase">RUMAH SAKIT TERAKREDITASI PARIPURNA</span>
+                        </div>
+                        
+                        <h1 class="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white leading-tight">
+                            Pelayanan Kesehatan Profesional untuk <span class="text-maroon">Masyarakat Indonesia</span>
+                        </h1>
+                        
+                        <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base leading-relaxed">
+                            RS Bhayangkara Akademi Kepolisian hadir memberikan pelayanan kesehatan yang cepat, aman, nyaman dan didukung oleh dokter spesialis berpengalaman dengan fasilitas modern.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-4 pt-2">
+                            <button onclick="showPage('informasi', 'jadwal')" class="bg-maroon hover:bg-maroon-hover text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center space-x-2 transition shadow-lg shadow-red-200 dark:shadow-none">
+                                <i data-lucide="calendar" class="w-4 h-4"></i>
+                                <span>Jadwal Dokter</span>
+                            </button>
+                            <a href="#kontak" class="border-2 border-maroon text-maroon hover:bg-maroon hover:text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center space-x-2 transition">
+                                <i data-lucide="phone-call" class="w-4 h-4"></i>
+                                <span>Hubungi Kami</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 relative flex justify-center">
+                        <div class="relative w-full max-w-lg lg:max-w-none overflow-hidden rounded-[40px] shadow-2xl border-4 border-white dark:border-gray-800">
+                            <img src="bacgkroun-rsb-akpol.jpeg" alt="RS Bhayangkara Gedung" class="w-full h-[380px] lg:h-[450px] object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURE STRIP CARD -->
+            <section class="max-w-7xl mx-auto px-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-gray-100 dark:divide-gray-700">
+                    <div class="flex items-start space-x-4 pt-4 md:pt-0">
+                        <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center flex-shrink-0 text-maroon">
+                            <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Dokter Profesional</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-snug">Dokter spesialis berpengalaman di bidangnya.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 pt-4 md:pt-0 md:pl-4">
+                        <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center flex-shrink-0 text-maroon">
+                            <i data-lucide="clock" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">IGD 24 Jam</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-snug">Layanan gawat darurat siap melayani 24 jam.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 pt-4 md:pt-0 lg:pl-4">
+                        <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center flex-shrink-0 text-maroon">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Pelayanan Aman</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-snug">Mengutamakan keselamatan dan kenyamanan pasien.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 pt-4 md:pt-0 lg:pl-4">
+                        <div class="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center flex-shrink-0 text-maroon">
+                            <i data-lucide="plus-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Fasilitas Lengkap</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-snug">Peralatan medis modern dan lengkap.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FITUR BARU: INFORMASI REAL-TIME KETERSEDIAAN KAMAR (BED AVAILABILITY) -->
+            <section class="max-w-7xl mx-auto px-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
+                    <div class="flex justify-between items-center border-b dark:border-gray-700 pb-3">
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-sm flex items-center space-x-2">
+                                <i data-lucide="activity" class="w-4 h-4 text-maroon"></i>
+                                <span>Informasi Ketersediaan Kamar Rawat Inap Real-time</span>
+                            </h3>
+                            <p class="text-[11px] text-gray-500 dark:text-gray-400">Update status sisa bed rawat inap hari ini</p>
+                        </div>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full animate-pulse">Live Update</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl border dark:border-gray-700">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">VIP / VVIP</p>
+                            <p class="text-xl font-black text-maroon dark:text-red-400">4 <span class="text-xs font-normal text-gray-500">Bed</span></p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl border dark:border-gray-700">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Kelas I</p>
+                            <p class="text-xl font-black text-emerald-600 dark:text-emerald-400">8 <span class="text-xs font-normal text-gray-500">Bed</span></p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl border dark:border-gray-700">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Kelas II & III</p>
+                            <p class="text-xl font-black text-emerald-600 dark:text-emerald-400">15 <span class="text-xs font-normal text-gray-500">Bed</span></p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-xl border dark:border-gray-700">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">ICU / HCU</p>
+                            <p class="text-xl font-black text-amber-600 dark:text-amber-400">2 <span class="text-xs font-normal text-gray-500">Bed</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LAYANAN UNGGULAN SECTION -->
+            <section id="layanan" class="max-w-7xl mx-auto px-6 space-y-8">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold text-maroon uppercase tracking-widest">LAYANAN KAMI</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Layanan Unggulan</h2>
+                    <div class="w-12 h-1 bg-maroon mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <!-- Kartu 1: Rawat Jalan -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center">
+                            <i data-lucide="stethoscope" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-base">Rawat Jalan</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Layanan konsultasi dan pemeriksaan medis komprehensif bersama dokter spesialis tanpa perlu menginap.</p>
+                        <button onclick="showPage('informasi', 'pendaftaran')" class="inline-flex items-center space-x-1 text-xs font-bold text-maroon hover:underline">
+                            <span>Selengkapnya</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Kartu 2: Rawat Inap -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center">
+                            <i data-lucide="bed" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-base">Rawat Inap</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Perawatan intensif dan pemulihan pasien dengan fasilitas nyaman serta observasi medis berkala.</p>
+                        <button onclick="showPage('informasi', 'pendaftaran')" class="inline-flex items-center space-x-1 text-xs font-bold text-maroon hover:underline">
+                            <span>Selengkapnya</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Kartu 3: IGD 24 Jam -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center">
+                            <i data-lucide="ambulance" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-base">IGD 24 Jam</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Layanan penanganan medis gawat darurat yang siap melayani dengan cepat dan tanggap 24 jam non-stop.</p>
+                        <button onclick="showPage('informasi', 'pendaftaran')" class="inline-flex items-center space-x-1 text-xs font-bold text-maroon hover:underline">
+                            <span>Selengkapnya</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FITUR BARU: KALKULATOR INDEKS MASSA TUBUH (BMI CALCULATOR) -->
+            <section class="max-w-7xl mx-auto px-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
+                    <div class="border-b dark:border-gray-700 pb-4 flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="calculator" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Kalkulator Kesehatan BMI (Body Mass Index)</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Cek status kecukupan gizi dan berat badan ideal Anda secara langsung</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <form onsubmit="hitungkanBMI(event)" class="space-y-4 text-xs">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Berat Badan (kg)</label>
+                                    <input type="number" id="bmi-weight" min="1" step="0.1" required placeholder="Contoh: 65" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                </div>
+                                <div>
+                                    <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Tinggi Badan (cm)</label>
+                                    <input type="number" id="bmi-height" min="1" step="0.1" required placeholder="Contoh: 170" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-maroon hover:bg-maroon-hover text-white font-bold rounded-lg transition shadow-md">Hitung Indeks BMI</button>
+                        </form>
+
+                        <div id="bmi-result-box" class="bg-gray-50 dark:bg-gray-700/50 p-6 rounded-xl border dark:border-gray-700 text-center space-y-2">
+                            <p class="text-xs font-semibold text-gray-500 dark:text-gray-400">Hasil Perhitungan BMI</p>
+                            <p id="bmi-score" class="text-3xl font-black text-maroon dark:text-red-400">-</p>
+                            <p id="bmi-status" class="text-xs font-bold text-gray-700 dark:text-gray-200">Masukkan data Anda untuk melihat hasil</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION FASILITAS -->
+            <section id="fasilitas" class="max-w-7xl mx-auto px-6 space-y-8">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold text-maroon uppercase tracking-widest">SARANA & PRASARANA</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Fasilitas Rumah Sakit</h2>
+                    <div class="w-12 h-1 bg-maroon mx-auto rounded-full"></div>
+                </div>
+
+                <div id="container-fasilitas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="flask-conical" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Laboratorium 24 Jam</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Dukungan pemeriksaan spesimen patologi klinis dan urinalisis cepat dan akurat.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="pill" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Instalasi Farmasi</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Layanan penebusan resep obat-obatan lengkap siap melayani 24 jam nonstop.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="ambulance" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Ambulans Gawat Darurat</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Armada mobil darurat medis dengan peralatan penunjang hidup yang lengkap.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="bed-double" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Ruang Rawat Inap & ICU</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Kamar perawatan yang bersih, nyaman, steril, serta dilengkapi fasilitas pengawasan intensif.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Radiologi & USG</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Pemeriksaan pencitraan medis radiologi modern untuk diagnosa penyakit akurat.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="building-2" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">Poliklinik Spesialis</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ruang konsul dokter spesialis THT, Penyakit Dalam, Anak, Bedah Umum dan Kedokteran Kepolisian.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION BERITA & EDUKASI KESEHATAN -->
+            <section id="berita" class="max-w-7xl mx-auto px-6 space-y-8">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold text-maroon uppercase tracking-widest">INFORMASI TERKINI</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Berita & Edukasi Kesehatan</h2>
+                    <div class="w-12 h-1 bg-maroon mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                        <div class="p-6 space-y-3">
+                            <span class="text-[10px] font-bold bg-red-50 dark:bg-red-950/50 text-maroon px-2.5 py-1 rounded-full uppercase">Edukasi Kesehatan</span>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-sm leading-snug">Pentingnya Pemeriksaan Kesehatan Rutin (MCU) Bagi Usia Produktif</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Pencegahan dini terhadap penyakit kronis menjadi langkah terpenting dalam menjaga kualitas hidup dan stamina kerja.</p>
+                        </div>
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-50 dark:border-gray-700 flex justify-between items-center text-[11px] text-gray-400">
+                            <span>02 Agustus 2026</span>
+                            <span class="text-maroon font-semibold cursor-pointer hover:underline">Baca Selengkapnya</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                        <div class="p-6 space-y-3">
+                            <span class="text-[10px] font-bold bg-red-50 dark:bg-red-950/50 text-maroon px-2.5 py-1 rounded-full uppercase">Kegiatan RS</span>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-sm leading-snug">Bakti Kesehatan RS Bhayangkara Akpol untuk Masyarakat Semarang</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Pelaksanaan pengobatan gratis dan konsultasi kesehatan gratis yang diselenggarakan dalam rangka memperingati Hari Bhayangkara.</p>
+                        </div>
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-50 dark:border-gray-700 flex justify-between items-center text-[11px] text-gray-400">
+                            <span>28 Juli 2026</span>
+                            <span class="text-maroon font-semibold cursor-pointer hover:underline">Baca Selengkapnya</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                        <div class="p-6 space-y-3">
+                            <span class="text-[10px] font-bold bg-red-50 dark:bg-red-950/50 text-maroon px-2.5 py-1 rounded-full uppercase">Tips Medis</span>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-sm leading-snug">Menjaga Kesehatan Telinga, Hidung, dan Tenggorokan di Musim Pancaroba</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Panduan dari dokter spesialis THT RS Bhayangkara Akpol untuk mencegah infeksi dan alergi pada saluran pernapasan.</p>
+                        </div>
+                        <div class="px-6 pb-6 pt-2 border-t border-gray-50 dark:border-gray-700 flex justify-between items-center text-[11px] text-gray-400">
+                            <span>15 Juli 2026</span>
+                            <span class="text-maroon font-semibold cursor-pointer hover:underline">Baca Selengkapnya</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION PENGADUAN PASIEN -->
+            <section id="pengaduan" class="max-w-7xl mx-auto px-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
+                    <div class="border-b dark:border-gray-700 pb-4">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Pengaduan & Saran Layanan</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Sampaikan masukan atau saran untuk peningkatan kualitas layanan RS Bhayangkara</p>
+                    </div>
+
+                    <form id="form-pengaduan" onsubmit="submitPengaduan(event)" class="space-y-3 text-xs">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Nama Pelapor (Opsional)</label>
+                                <input type="text" id="aduan-nama" placeholder="Isi 'Anonim' jika ingin merahasiakan nama" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                            </div>
+                            <div>
+                                <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Kategori Laporan</label>
+                                <select id="aduan-kategori" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                    <option value="Pelayanan Medis">Pelayanan Medis</option>
+                                    <option value="Fasilitas & Kebersihan">Fasilitas & Kebersihan</option>
+                                    <option value="Administrasi & Loket">Administrasi & Loket</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Detail Keluhan / Saran</label>
+                            <textarea id="aduan-isi" rows="3" required placeholder="Tuliskan masukan Anda secara jelas..." class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white"></textarea>
+                        </div>
+                        <button type="submit" class="px-6 py-2.5 bg-maroon text-white font-bold rounded-lg hover:bg-maroon-hover transition">Kirim Pengaduan</button>
+                    </form>
+
+                    <div id="status-pengaduan" class="hidden bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900 p-3 rounded-lg text-xs text-blue-800 dark:text-blue-300 space-y-2">
+                        <div>
+                            Laporan pengaduan berhasil terkirim. Kode Tiket: <span id="tiket-aduan-id" class="font-bold text-maroon dark:text-red-400"></span>
+                        </div>
+                        <!-- TAMBAHAN BARU: Tombol Cetak Aduan -->
+                        <button onclick="cetakTiket('status-pengaduan')" class="bg-blue-600 text-white px-3 py-1 rounded text-[10px] font-bold hover:bg-blue-700 transition">Cetak Bukti Pengaduan</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION KONTAK / HUBUNGI KAMI -->
+            <section id="kontak" class="max-w-7xl mx-auto px-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
+                    <div class="border-b dark:border-gray-700 pb-4">
+                        <span class="text-xs font-bold text-maroon uppercase tracking-widest">LOKASI & KONTAK</span>
+                        <h2 class="text-2xl lg:text-3xl font-black text-gray-900 dark:text-white mt-1">Hubungi Kami</h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Temukan lokasi RS Bhayangkara Akpol atau hubungi kami untuk informasi lebih lanjut</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        <!-- Peta Google Maps Embed -->
+                        <div class="lg:col-span-7 h-[350px] lg:h-auto min-h-[300px] rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-inner">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.03831885915!2d110.4172553!3d-7.0282987!2m3!1f0!0f0!0f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708ba1f4c71853%3A0x289728cb1ef4dfef!2sPolice%20Hospitals%20Akpol!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+
+                        <!-- Detail Informasi Kontak -->
+                        <div class="lg:col-span-5 flex flex-col justify-center space-y-6 divide-y divide-gray-100 dark:divide-gray-700">
+                            <!-- Alamat -->
+                            <div class="flex items-start space-x-4 pt-2">
+                                <div class="w-12 h-12 rounded-full bg-gray-900 dark:bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-md">
+                                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                                </div>
+                                <div class="text-xs space-y-1">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-sm">Alamat Lengkap</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                        Jl. Sultan Agung No.131, Candi Baru, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50232
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Email Pengaduan -->
+                            <div class="flex items-start space-x-4 pt-6">
+                                <div class="w-12 h-12 rounded-full bg-gray-900 dark:bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-md">
+                                    <i data-lucide="mail" class="w-6 h-6"></i>
+                                </div>
+                                <div class="text-xs space-y-1">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide">LAYANAN PENGADUAN</h4>
+                                    <a href="mailto:rumkit.akpol@gmail.com" class="text-maroon dark:text-red-400 font-semibold hover:underline block text-sm">
+                                        rumkit.akpol@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Nomor Telepon -->
+                            <div class="flex items-start space-x-4 pt-6">
+                                <div class="w-12 h-12 rounded-full bg-gray-900 dark:bg-gray-700 text-white flex items-center justify-center flex-shrink-0 shadow-md">
+                                    <i data-lucide="phone" class="w-6 h-6"></i>
+                                </div>
+                                <div class="text-xs space-y-1">
+                                    <h4 class="font-bold text-gray-900 dark:text-white text-sm">Telepon / WhatsApp</h4>
+                                    <a href="https://wa.me/6285727040773" target="_blank" class="text-maroon dark:text-red-400 font-extrabold text-base hover:underline block">
+                                        085727040773
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ==================== VIEW 2: HALAMAN INFORMASI PASIEN (TAB) ==================== -->
+        <div id="view-informasi" class="hidden max-w-7xl mx-auto px-6 py-10 space-y-8">
+            <div class="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                <button onclick="showPage('home')" class="hover:text-maroon font-medium">Home</button>
+                <span>/</span>
+                <span class="text-maroon font-bold">Informasi Pasien</span>
+            </div>
+
+            <div class="flex justify-center border-b border-gray-200 dark:border-gray-700">
+                <button id="tab-btn-jadwal" onclick="switchInfoTab('jadwal')" class="py-3 px-8 text-sm font-bold border-b-2 border-maroon text-maroon transition flex items-center space-x-2">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span>Jadwal Dokter</span>
+                </button>
+                <button id="tab-btn-pendaftaran" onclick="switchInfoTab('pendaftaran')" class="py-3 px-8 text-sm font-bold border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-maroon transition flex items-center space-x-2">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>Pendaftaran Online</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: JADWAL DOKTER -->
+            <div id="tab-content-jadwal" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
+                <div class="border-b dark:border-gray-700 pb-4">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Jadwal Dokter Praktik</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Cari jadwal dokter spesialis RS Bhayangkara Akpol</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="search-dokter" oninput="renderJadwalDokter()" placeholder="Cari nama dokter / spesialis..." class="flex-grow p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl text-xs focus:outline-none focus:border-maroon dark:text-white">
+                    <select id="filter-hari" onchange="renderJadwalDokter()" class="p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-xl text-xs focus:outline-none focus:border-maroon dark:text-white">
+                        <option value="">Semua Hari</option>
+                        <option value="Senin">Senin</option>
+                        <option value="Selasa">Selasa</option>
+                        <option value="Rabu">Rabu</option>
+                        <option value="Kamis">Kamis</option>
+                        <option value="Jumat">Jumat</option>
+                        <option value="Sabtu">Sabtu</option>
+                    </select>
+                </div>
+
+                <div id="grid-dokter" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- TAB 2: PENDAFTARAN ONLINE -->
+            <div id="tab-content-pendaftaran" class="hidden max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
+                <div class="border-b dark:border-gray-700 pb-4">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Pendaftaran Online</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Isi data untuk mengambil nomor antrean berobat</p>
+                </div>
+
+                <form id="form-pendaftaran" onsubmit="submitPendaftaran(event)" class="space-y-4 text-xs">
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Nama Lengkap Pasien</label>
+                        <input type="text" id="reg-nama" required placeholder="Contoh: Budi Santoso" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">NIK / NRP</label>
+                        <input type="text" id="reg-nik" required placeholder="Masukkan NIK KTP atau NRP" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Kategori</label>
+                            <select id="reg-kategori" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                <option value="Umum">Masyarakat Umum</option>
+                                <option value="Anggota Polri">Anggota Polri</option>
+                                <option value="Taruna Akpol">Taruna Akpol</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Pembayaran</label>
+                            <select id="reg-bayar" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                <option value="Umum">Umum / Mandiri</option>
+                                <option value="BPJS">BPJS Kesehatan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Pilih Dokter Spesialis</label>
+                        <select id="reg-dokter" required class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white"></select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Tanggal Kunjungan</label>
+                        <input type="date" id="reg-tanggal" required class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-maroon hover:bg-maroon-hover text-white rounded-xl font-bold transition shadow-md">Daftar Sekarang</button>
+                </form>
+
+                <div id="tiket-pendaftaran" class="hidden bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 p-4 rounded-xl space-y-2">
+                    <p class="text-xs font-bold text-emerald-800 dark:text-emerald-300">✓ Pendaftaran Berhasil!</p>
+                    <p class="text-[10px] text-emerald-600 dark:text-emerald-400">Silakan tunjukkan nomor antrean ini ke loket pendaftaran:</p>
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border dark:border-gray-700 text-center">
+                        <p class="text-[10px] text-gray-400">Nomor Antrean Anda</p>
+                        <p id="tiket-no" class="text-2xl font-black text-maroon dark:text-red-400">A-000</p>
+                        <p id="tiket-info" class="text-[10px] text-gray-500 dark:text-gray-400 mt-1"></p>
+                    </div>
+                    <!-- TAMBAHAN BARU: Tombol Cetak Antrean -->
+                    <div class="text-center pt-2">
+                        <button onclick="cetakTiket('tiket-pendaftaran')" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-emerald-700 transition">Cetak Tiket Antrean</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW 3: HALAMAN PROFIL ==================== -->
+        <div id="view-profil" class="hidden max-w-7xl mx-auto px-6 py-10 space-y-12">
+            <div class="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                <button onclick="showPage('home')" class="hover:text-maroon font-medium">Home</button>
+                <span>/</span>
+                <span class="text-maroon font-bold">Profil RS</span>
+            </div>
+
+            <!-- SEJARAH SINGKAT -->
+            <section id="sejarah" class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                <div class="space-y-1 border-b dark:border-gray-700 pb-4">
+                    <span class="text-xs font-bold text-maroon uppercase tracking-widest">PROFIL RS</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Sejarah Singkat</h2>
+                    <div class="w-12 h-1 bg-maroon rounded-full mt-2"></div>
+                </div>
+
+                <div class="space-y-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p>
+                        <strong class="text-gray-900 dark:text-white">Rumah Sakit Bhayangkara TK. III Akpol</strong> adalah Rumah Sakit milik Kepolisian Negara Republik Indonesia di bawah Pusdokkes Mabes Polri, yang awal berdirinya disebut dengan <strong class="text-gray-900 dark:text-white">KSA (Kamar Sakit Asrama)</strong> yang digunakan untuk tempat berobat dan dirawatnya para Taruna Akpol, Anggota Polri, maupun Pegawai Negeri Sipil pada Akpol. Pada tahun 2013, berdasarkan Surat Keputusan Kapolri, Rumah Sakit Bhayangkara TK. III Akpol ditetapkan sebagai salah satu Rumkit Bhayangkara yang menjadi Unit Pelaksana Teknis (UPT) di lingkungan Kepolisian Negara Republik Indonesia.
+                    </p>
+                    <p>
+                        Rumkit Bhayangkara merupakan UPT Pusdokkes Polri yang berkedudukan di bawah Kapusdokkes Polri selaku pembina fungsi teknis kedokteran kepolisian dan kesehatan kepolisian. Untuk pelaksanaan teknis operasional dan administratif, rumah sakit ini bertanggung jawab kepada Kepala Kesatuan Wilayah dan/atau Kepala Unit Organisasi yang bersesuaian. Pembinaan operasional dan administrasi Rumkit Bhayangkara Tingkat II, Tingkat III, dan Tingkat IV yang berkedudukan di Lemdik Polri berada di bawah Kalemdiklat Polri melalui Gubernur Akpol/Kasespimma/Kasetukpa/Kapusdik.
+                    </p>
+
+                    <div class="pt-2">
+                        <h3 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center space-x-2">
+                            <i data-lucide="scale" class="w-5 h-5 text-maroon"></i>
+                            <span>Payung Hukum & Dasar Pendirian</span>
+                        </h3>
+                        <p class="mb-3">
+                            Sebagai payung hukum dalam penyelenggaraan pelayanan kesehatan kepada masyarakat, perkembangan Rumah Sakit Bhayangkara TK. III Akpol secara yuridis didukung dengan produk-produk hukum sebagai berikut:
+                        </p>
+                        <ul class="space-y-2.5 list-none pl-0">
+                            <li class="flex items-start space-x-3 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700 text-xs text-gray-700 dark:text-gray-300">
+                                <i data-lucide="file-check-2" class="w-4 h-4 text-maroon flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Peraturan Kapolri No. 11 Tahun 2011 (30 Juni 2011)</strong> – Tentang Susunan Organisasi dan Tata Kerja Rumah Sakit Bhayangkara Kepolisian Negara Republik Indonesia.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700 text-xs text-gray-700 dark:text-gray-300">
+                                <i data-lucide="file-check-2" class="w-4 h-4 text-maroon flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Keputusan Kapolri No: Kep/458/VI/2013 (27 Juni 2013)</strong> – Tentang 7 (tujuh) Rumah Sakit Bhayangkara sebagai Unit Pelaksana Teknis (UPT) di lingkungan Kepolisian Negara Republik Indonesia.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700 text-xs text-gray-700 dark:text-gray-300">
+                                <i data-lucide="award" class="w-4 h-4 text-maroon flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Sertifikat Akreditasi RS No: KARS-SERT/559/VI/2012 (15 Juni 2012)</strong> – Pengakuan rumah sakit telah memenuhi standar akreditasi rumah sakit dan dinyatakan lulus tingkat DASAR.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700 text-xs text-gray-700 dark:text-gray-300">
+                                <i data-lucide="award" class="w-4 h-4 text-maroon flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Sertifikat Akreditasi RS No: KARS-SERT/1488/VIII/2021 (31 Agustus 2021)</strong> – Pengakuan rumah sakit telah memenuhi standar akreditasi rumah sakit dan dinyatakan lulus tingkat PERDANA.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700 text-xs text-gray-700 dark:text-gray-300">
+                                <i data-lucide="file-badge-2" class="w-4 h-4 text-maroon flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Surat Kepala Dinkes Kota Semarang No: B/2362/050/II/2022 (7 Februari 2022)</strong> – Berita acara visitasi penilaian kesesuaian izin berusaha Rumah Sakit Bhayangkara Akpol sebagai Rumah Sakit Umum Kelas C.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700 text-xs text-gray-700 dark:text-gray-300">
+                                <i data-lucide="file-badge-2" class="w-4 h-4 text-maroon flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Surat Walikota Semarang No. Izin: 19112100341440001 (16 Februari 2022)</strong> – Perizinan Berbasis Risiko.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISI & MISI -->
+            <section id="visimisi" class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                <div class="space-y-1 border-b dark:border-gray-700 pb-4">
+                    <span class="text-xs font-bold text-maroon uppercase tracking-widest">KOMITMEN KAMI</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Visi & Misi</h2>
+                    <div class="w-12 h-1 bg-maroon rounded-full mt-2"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Kotak Visi -->
+                    <div class="lg:col-span-5 bg-gradient-to-br from-maroon to-red-900 text-white rounded-2xl p-6 shadow-md flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                                <i data-lucide="compass" class="w-6 h-6 text-yellow-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold tracking-wide">VISI</h3>
+                            <p class="text-sm font-semibold leading-relaxed text-red-50">
+                                Terwujudnya pelayanan kedokteran kepolisian dan kesehatan kepolisian yang prima
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-white/10 text-xs text-red-200 font-medium">
+                            RS Bhayangkara Akpol Semarang
+                        </div>
+                    </div>
+
+                    <!-- Kotak Misi -->
+                    <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center space-x-3 border-b dark:border-gray-600 pb-3">
+                            <div class="w-10 h-10 bg-red-100 text-maroon dark:bg-red-900/50 dark:text-red-300 rounded-lg flex items-center justify-center">
+                                <i data-lucide="target" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">MISI</h3>
+                        </div>
+
+                        <ul class="space-y-3 text-xs text-gray-700 dark:text-gray-300">
+                            <li class="flex items-start space-x-3 bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                                <span class="w-6 h-6 rounded-full bg-maroon text-white font-bold flex items-center justify-center flex-shrink-0 text-[11px]">1</span>
+                                <span class="leading-relaxed">Menyelenggarakan pelayanan kedokteran kepolisian guna mendukung tugas operasional kepolisian dalam harkamtibmas, penegakkan hukum, perlindungan, pengayoman dan pelayanan masyarakat demi terpeliharanya keamanan dalam negeri;</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                                <span class="w-6 h-6 rounded-full bg-maroon text-white font-bold flex items-center justify-center flex-shrink-0 text-[11px]">2</span>
+                                <span class="leading-relaxed">Mendukung pembinaan personel agar dapat tercipta personel yang sehat samapta dan selalu siap dalam melaksanakan tugas;</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                                <span class="w-6 h-6 rounded-full bg-maroon text-white font-bold flex items-center justify-center flex-shrink-0 text-[11px]">3</span>
+                                <span class="leading-relaxed">Menyelenggarakan pelayanan kesehatan paripurna pada masyarakat, Polri dan umum untuk mewujudkan hidup sehat, sejahtera serta fisik, mental dapat timbulkan gangguan kamtibmas;</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                                <span class="w-6 h-6 rounded-full bg-maroon text-white font-bold flex items-center justify-center flex-shrink-0 text-[11px]">4</span>
+                                <span class="leading-relaxed">Mengelola sumber daya Rumah Sakit Bhayangkara Akpol secara profesional, akuntabilitas, efektif, efisien dan modern dalam melaksanakan tugas dan fungsi rumah sakit</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STRUKTUR ORGANISASI -->
+            <section id="struktur" class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                <div class="space-y-1 border-b dark:border-gray-700 pb-4">
+                    <span class="text-xs font-bold text-maroon uppercase tracking-widest">STRUKTUR RS</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Struktur Organisasi</h2>
+                    <div class="w-12 h-1 bg-maroon rounded-full mt-2"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Diagram Bagan Struktur Organisasi -->
+                    <div class="lg:col-span-5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 rounded-xl p-4 flex flex-col items-center justify-center space-y-3">
+                        <img src="http://rsb.akpol.ac.id/wp-content/uploads/2021/03/Struktur-Organisasi.jpg" alt="Bagan Struktur Organisasi Rumkit Bhayangkara Akpol" class="w-full h-auto rounded-lg shadow-sm border border-gray-200 bg-white p-2">
+                        <span class="text-[11px] text-gray-500 dark:text-gray-400 font-medium text-center">Bagan Struktur Organisasi Rumkit Bhayangkara Akpol (Peraturan Kapolri Nomor 11 Tahun 2011)</span>
+                    </div>
+
+                    <!-- Daftar Pejabat Struktural -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white border-b dark:border-gray-700 pb-2 flex items-center space-x-2">
+                            <i data-lucide="users" class="w-5 h-5 text-maroon"></i>
+                            <span>PEJABAT STRUKTURAL</span>
+                        </h3>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-red-50 dark:bg-red-950/40 text-maroon dark:text-red-300 font-bold border-b border-red-100 dark:border-gray-700">
+                                        <th class="py-2.5 px-3 w-12 text-center">No</th>
+                                        <th class="py-2.5 px-3 w-44">Jabatan</th>
+                                        <th class="py-2.5 px-3">Nama & Gelar</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 text-gray-700 dark:text-gray-300">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">1</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Karumkit</td><td class="py-2 px-3">Kompol dr. Purwadi, Sp.THT KL.,M.M.</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">2</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Wakarumkit</td><td class="py-2 px-3">Pembina dr. Utami Dewi</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">3</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kasubbagwaintern</td><td class="py-2 px-3">AKP Titin Utami</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">4</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurwasbin</td><td class="py-2 px-3">Ipda Nawar Masansan, S.Ikom</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">5</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurwasopyan</td><td class="py-2 px-3">Penda Tk.I dr. Mega Yuni Ari Susanti</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">6</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kasubbagrenmin</td><td class="py-2 px-3">Iptu Pepin Dwi Harsanto, S.H.</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">7</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurmin</td><td class="py-2 px-3">Iptu Djumi Jati</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">8</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurtu</td><td class="py-2 px-3">Ipda Rikha Astriani</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">9</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurren</td><td class="py-2 px-3">Penata Tk.I Diah Kartika S, S.E.</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">10</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurkeu</td><td class="py-2 px-3">Penata Irawati, A.Md</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">11</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kasubbagbinfung</td><td class="py-2 px-3">AKP Istikomah, S.H.</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">12</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaursim-RM</td><td class="py-2 px-3">Ipda Titik Mei, S.H.</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">13</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurdiklit</td><td class="py-2 px-3">Penda Endang Poncowati, S.Kep</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">14</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kasubbidyanmeddokpol</td><td class="py-2 px-3">Iptu dr. Andromedae</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">15</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kauryanmed</td><td class="py-2 px-3">Ipda dr. Henry, Sp.PD</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">16</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kauryanwat</td><td class="py-2 px-3">Ipda Yunita Purnama Sari, A.Mk</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">17</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kouryandokpol</td><td class="py-2 px-3">Penata Sonaji, Amf</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">18</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kasubbidjangmedum</td><td class="py-2 px-3">AKP Sri Rejeki</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">19</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurjangmed</td><td class="py-2 px-3">Penata Sri Lestari Rita F, A.Md.Keb</td></tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50"><td class="py-2 px-3 text-center font-semibold">20</td><td class="py-2 px-3 font-semibold text-gray-900 dark:text-white">Kaurjangum</td><td class="py-2 px-3">Iptu Dwi Nanang S, S.H.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== VIEW 4: PORTAL INTERNAL ADMIN (Dedicated Sidebar Layout) ==================== -->
+        <div id="view-internal" class="hidden min-h-screen bg-gray-100 dark:bg-gray-900">
+            <div class="flex h-screen overflow-hidden">
+                <!-- SIDEBAR ADMIN -->
+                <aside class="w-64 bg-gray-900 text-white flex flex-col justify-between shadow-xl flex-shrink-0">
+                    <div>
+                        <!-- Sidebar Header -->
+                        <div class="p-5 border-b border-gray-800 flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-maroon flex items-center justify-center text-white font-bold text-xs shadow-md">
+                                RS
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-sm tracking-wide leading-tight">Login</h2>
+                                <p class="text-[10px] text-gray-400">RS Bhayangkara Akpol</p>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Links -->
+                        <nav class="p-4 space-y-1 text-xs">
+                            <button onclick="switchAdminTab('overview')" id="admin-nav-overview" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl bg-maroon text-white font-semibold transition">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                                <span>Overview</span>
+                            </button>
+                            <button onclick="switchAdminTab('pendaftaran')" id="admin-nav-pendaftaran" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                <span>Antrean Pendaftaran</span>
+                            </button>
+                            <!-- TERBARU ADMIN: Navigasi Kelola Dokter -->
+                            <button onclick="switchAdminTab('dokter')" id="admin-nav-dokter" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                                <i data-lucide="user-check" class="w-4 h-4"></i>
+                                <span>Kelola Dokter</span>
+                            </button>
+                            <!-- TERBARU ADMIN: Navigasi Kelola Fasilitas -->
+                            <button onclick="switchAdminTab('fasilitas')" id="admin-nav-fasilitas" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                                <i data-lucide="building" class="w-4 h-4"></i>
+                                <span>Kelola Fasilitas</span>
+                            </button>
+                            <button onclick="switchAdminTab('pengaduan')" id="admin-nav-pengaduan" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition">
+                                <i data-lucide="message-square" class="w-4 h-4"></i>
+                                <span>Data Pengaduan</span>
+                            </button>
+                            <button onclick="showPage('home')" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition border-t border-gray-800 mt-4">
+                                <i data-lucide="globe" class="w-4 h-4"></i>
+                                <span>Lihat Website</span>
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Sidebar Footer -->
+                    <div class="p-4 border-t border-gray-800">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-7 h-7 rounded-full bg-red-900 text-yellow-300 flex items-center justify-center font-bold text-[10px]">
+                                    AD
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-white leading-none">Administrator</p>
+                                    <p class="text-[10px] text-gray-400">Online</p>
+                                </div>
+                            </div>
+                            <button onclick="logoutAdmin()" title="Keluar" class="p-1.5 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition">
+                                <i data-lucide="log-out" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- MAIN CONTENT DASHBOARD ADMIN -->
+                <div class="flex-grow flex flex-col overflow-y-auto">
+                    <!-- Topbar -->
+                    <header class="bg-white dark:bg-gray-800 border-b dark:border-gray-700 px-8 py-4 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+                        <div class="flex items-center space-x-2">
+                            <h2 id="admin-header-title" class="text-xl font-bold text-gray-800 dark:text-white">Dashboard Admin Overview</h2>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <!-- TERBARU ADMIN: Toggle Status Operasional Rumah Sakit -->
+                            <button onclick="toggleStatusOperasional()" id="btn-status-operasional" class="px-3 py-1 bg-red-50 text-maroon text-xs font-bold rounded-full border border-red-100 transition hover:scale-105">
+                                Status: Operational
+                            </button>
+                            <button onclick="logoutAdmin()" class="bg-maroon hover:bg-maroon-hover text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-sm">
+                                Keluar Admin
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- Body Content Admin -->
+                    <div class="p-8 space-y-6">
+                        <!-- STAT CARDS CONTAINER -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
+                                <div class="space-y-1">
+                                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Total Pendaftaran</p>
+                                    <p id="stat-total-pendaftaran" class="text-3xl font-black text-maroon dark:text-red-400">0</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/50 text-maroon flex items-center justify-center">
+                                    <i data-lucide="file-text" class="w-6 h-6"></i>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
+                                <div class="space-y-1">
+                                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Total Pengaduan</p>
+                                    <p id="stat-total-pengaduan" class="text-3xl font-black text-amber-600 dark:text-amber-400">0</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 flex items-center justify-center">
+                                    <i data-lucide="message-square" class="w-6 h-6"></i>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-between">
+                                <div class="space-y-1">
+                                    <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Dokter Aktif</p>
+                                    <p id="stat-total-dokter" class="text-3xl font-black text-emerald-600 dark:text-emerald-400">5</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center">
+                                    <i data-lucide="user-check" class="w-6 h-6"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION TAB 1: PENDAFTARAN -->
+                        <div id="admin-sec-pendaftaran" class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b dark:border-gray-700 pb-4">
+                                <div>
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-base">Data Antrean Pendaftaran Pasien</h3>
+                                    <p class="text-xs text-gray-400">Daftar pendaftaran masuk dari form online pasien</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <!-- Export Data Pasien -->
+                                    <button onclick="exportToCSV('pendaftaran')" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg flex items-center space-x-1 font-semibold transition">
+                                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                        <span>Export CSV</span>
+                                    </button>
+                                    <button onclick="renderInternalTables()" class="text-xs text-maroon hover:underline flex items-center space-x-1 font-semibold">
+                                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                                        <span>Refresh Data</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Filter Input Search di Tabel Admin -->
+                            <div class="w-full max-w-xs">
+                                <input type="text" id="admin-search-pendaftaran" oninput="renderInternalTables()" placeholder="Cari nama/NIK pasien..." class="w-full p-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg text-xs focus:outline-none focus:border-maroon dark:text-white">
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-gray-50 dark:bg-gray-700/50 border-b dark:border-gray-700 text-gray-500 dark:text-gray-300 font-bold">
+                                            <th class="p-3">No. Antrean</th>
+                                            <th class="p-3">Nama Pasien</th>
+                                            <th class="p-3">NIK/NRP</th>
+                                            <th class="p-3">Kategori</th>
+                                            <th class="p-3">Dokter Tujuan</th>
+                                            <th class="p-3">Tgl Kunjungan</th>
+                                            <th class="p-3 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabel-internal-pendaftaran" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TERBARU ADMIN: SECTION TAB KELOLA DOKTER -->
+                        <div id="admin-sec-dokter" class="hidden bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                            <div class="border-b dark:border-gray-700 pb-4">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-base">Kelola Master Data Dokter</h3>
+                                <p class="text-xs text-gray-400">Tambah atau hapus jadwal praktik dokter spesialis</p>
+                            </div>
+
+                            <form onsubmit="tambahDokterBaru(event)" class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl space-y-3 border dark:border-gray-700 text-xs">
+                                <h4 class="font-bold text-gray-800 dark:text-white">Form Tambah Dokter Baru</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                                    <input type="text" id="add-doc-nama" required placeholder="Nama & Gelar Dokter" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                    <input type="text" id="add-doc-spesialis" required placeholder="Spesialisasi (contoh: Spesialis Anak)" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                    <input type="text" id="add-doc-hari" required placeholder="Hari Praktik (misal: Senin - Rabu)" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                    <input type="text" id="add-doc-jam" required placeholder="Jam Praktik (misal: 08.00 - 12.00 WIB)" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                </div>
+                                <button type="submit" class="bg-maroon hover:bg-maroon-hover text-white px-4 py-2 rounded-lg font-bold transition flex items-center space-x-1">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    <span>Simpan Dokter Baru</span>
+                                </button>
+                            </form>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-gray-50 dark:bg-gray-700/50 border-b dark:border-gray-700 text-gray-500 dark:text-gray-300 font-bold">
+                                            <th class="p-3">Nama Dokter</th>
+                                            <th class="p-3">Spesialis</th>
+                                            <th class="p-3">Hari Praktik</th>
+                                            <th class="p-3">Jam Praktik</th>
+                                            <th class="p-3 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabel-internal-dokter" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TERBARU ADMIN: SECTION TAB KELOLA FASILITAS -->
+                        <div id="admin-sec-fasilitas" class="hidden bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+                            <div class="border-b dark:border-gray-700 pb-4">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-base">Kelola Fasilitas Rumah Sakit</h3>
+                                <p class="text-xs text-gray-400">Tambahkan fasilitas penunjang medis terbaru yang ada di rumah sakit</p>
+                            </div>
+
+                            <form onsubmit="tambahFasilitasBaru(event)" class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl space-y-3 border dark:border-gray-700 text-xs">
+                                <h4 class="font-bold text-gray-800 dark:text-white">Form Tambah Fasilitas Baru</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <input type="text" id="add-fasilitas-nama" required placeholder="Nama Fasilitas" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                    <input type="text" id="add-fasilitas-desc" required placeholder="Deskripsi Singkat" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                    <select id="add-fasilitas-icon" class="p-2.5 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                                        <option value="activity">Icon Activity / Diagnosa</option>
+                                        <option value="heart-pulse">Icon Heart / Medis</option>
+                                        <option value="shield-check">Icon Shield / Proteksi</option>
+                                        <option value="building-2">Icon Building / Gedung</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="bg-maroon hover:bg-maroon-hover text-white px-4 py-2 rounded-lg font-bold transition flex items-center space-x-1">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    <span>Tambah Fasilitas</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- SECTION TAB 2: PENGADUAN -->
+                        <div id="admin-sec-pengaduan" class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
+                            <div class="flex justify-between items-center border-b dark:border-gray-700 pb-4">
+                                <div>
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-base">Data Pengaduan / Masukan Pasien</h3>
+                                    <p class="text-xs text-gray-400">Kotak saran dan masukan pengunjung/pasien</p>
+                                </div>
+                                <!-- Export Data Pengaduan -->
+                                <button onclick="exportToCSV('pengaduan')" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg flex items-center space-x-1 font-semibold transition">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    <span>Export CSV</span>
+                                </button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-gray-50 dark:bg-gray-700/50 border-b dark:border-gray-700 text-gray-500 dark:text-gray-300 font-bold">
+                                            <th class="p-3">ID Tiket</th>
+                                            <th class="p-3">Pelapor</th>
+                                            <th class="p-3">Kategori</th>
+                                            <th class="p-3">Isi Pengaduan</th>
+                                            <th class="p-3 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabel-internal-pengaduan" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL AUTH GABUNGAN PASIEN & ADMIN -->
+    <div id="modal-login" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gray-100 dark:border-gray-700 space-y-4 relative">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 font-bold">✕</button>
+
+            <!-- TAB PILIHAN ROLE (PASIEN / ADMIN) -->
+            <div class="flex bg-gray-100 dark:bg-gray-700 p-1 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">
+                <button id="role-btn-pasien" onclick="switchRoleTab('pasien')" class="flex-1 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm text-maroon transition flex items-center justify-center space-x-1">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                    <span>Pasien</span>
+                </button>
+                <button id="role-btn-admin" onclick="switchRoleTab('admin')" class="flex-1 py-2 rounded-lg hover:text-maroon transition flex items-center justify-center space-x-1">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Admin</span>
+                </button>
+            </div>
+
+            <!-- CONTAINER CONTAINER FORM PASIEN -->
+            <div id="role-content-pasien">
+                <!-- FORM LOGIN PASIEN -->
+                <div id="box-login">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white text-center mb-1">Masuk Akun Pasien</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-4">Silakan masuk menggunakan email Anda</p>
+
+                    <form onsubmit="submitLogin(event)" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Email</label>
+                            <input type="email" id="login-email" required placeholder="nama@email.com" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Password</label>
+                            <input type="password" id="login-password" required placeholder="••••••••" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-maroon hover:bg-maroon-hover text-white rounded-xl font-bold transition shadow-md">Masuk</button>
+                    </form>
+
+                    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">
+                        Belum punya akun? 
+                        <button type="button" onclick="toggleAuthForm('register')" class="text-maroon font-bold underline hover:text-maroon-hover">Daftar Sekarang</button>
+                    </p>
+                </div>
+
+                <!-- FORM REGISTER PASIEN -->
+                <div id="box-register" class="hidden">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white text-center mb-1">Daftar Akun Pasien</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-4">Lengkapi data untuk membuat akun baru</p>
+
+                    <form onsubmit="submitRegister(event)" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Nama Lengkap</label>
+                            <input type="text" id="reg-nama-user" required placeholder="Masukkan nama Anda" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Email</label>
+                            <input type="email" id="reg-email-user" required placeholder="nama@email.com" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Password</label>
+                            <input type="password" id="reg-pass-user" required placeholder="••••••••" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-maroon hover:bg-maroon-hover text-white rounded-xl font-bold transition shadow-md">Daftar Akun</button>
+                    </form>
+
+                    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4">
+                        Sudah punya akun? 
+                        <button type="button" onclick="toggleAuthForm('login')" class="text-maroon font-bold underline hover:text-maroon-hover">Masuk di sini</button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- CONTAINER FORM ADMIN -->
+            <div id="role-content-admin" class="hidden">
+                <div class="text-center mb-3">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Login Administrator</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Khusus staf dan pengelola RS Bhayangkara</p>
+                </div>
+
+                <form onsubmit="submitAdminLogin(event)" class="space-y-3 text-xs">
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Username / NIP</label>
+                        <input type="text" id="admin-user" required placeholder="admin" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-gray-700 dark:text-gray-300">Password</label>
+                        <input type="password" id="admin-pass" required placeholder="••••••••" class="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-lg focus:outline-none focus:border-maroon dark:text-white">
+                    </div>
+                    <p class="text-[10px] text-gray-400 text-center">Gunakan akun <strong>admin</strong> & password <strong>admin123</strong></p>
+                    <button type="submit" class="w-full py-3 bg-maroon hover:bg-maroon-hover text-white rounded-xl font-bold transition shadow-md">Masuk Dashboard Admin</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER (Hidden saat di tampilan Admin Fullscreen) -->
+    <footer id="main-footer" class="bg-gray-900 text-white mt-12 py-8 border-t-4 border-maroon">
+        <div class="max-w-7xl mx-auto px-6 text-xs text-gray-400 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-bold text-white text-sm">RS Bhayangkara Akademi Kepolisian</p>
+                <p class="mt-1">Jl. Sultan Agung No.131, Candi Baru, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50232</p>
+            </div>
+            <div class="text-right">
+                <p>&copy; 2026 RS Bhayangkara Akpol. All rights reserved.</p>
+                <p class="text-[10px] text-gray-500 mt-0.5">Email: rumkit.akpol@gmail.com | Telp: 085727040773</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Init Lucide Icons & SCRIPT UTAMA -->
+    <script>
+        // Data Master Dokter Dynamic
+        let dataDokter = JSON.parse(localStorage.getItem('rs_dokter_list')) || [
+            { id: 1, nama: "Kompol dr. Purwadi, Sp.THT KL.,M.M.", spesialis: "Spesialis THT", hari: "Senin, Rabu, Jumat", jam: "08.00 - 12.00 WIB" },
+            { id: 2, nama: "Ipda dr. Henry, Sp.PD", spesialis: "Spesialis Penyakit Dalam", hari: "Senin s/d Kamis", jam: "09.00 - 13.00 WIB" },
+            { id: 3, nama: "dr. Mega Yuni Ari Susanti", spesialis: "Dokter Umum / MCU", hari: "Setiap Hari Kerja", jam: "08.00 - 15.00 WIB" },
+            { id: 4, nama: "dr. Kartika Sari, Sp.A", spesialis: "Spesialis Anak", hari: "Selasa, Kamis, Sabtu", jam: "10.00 - 14.00 WIB" },
+            { id: 5, nama: "dr. Bambang Irawan, Sp.B", spesialis: "Spesialis Bedah Umum", hari: "Senin, Rabu, Jumat", jam: "13.00 - 16.00 WIB" }
+        ];
+
+        // System Storage Local
+        let pendaftaranList = JSON.parse(localStorage.getItem('rs_pendaftaran')) || [];
+        let pengaduanList = JSON.parse(localStorage.getItem('rs_pengaduan')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('rs_user')) || null;
+        let isAdminLoggedIn = localStorage.getItem('rs_admin_logged') === 'true';
+        let statusOperasionalRS = localStorage.getItem('rs_status_ops') || 'Operational';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            populateDokterSelect();
+            renderJadwalDokter();
+            updateAuthUI();
+            updateStatusOperasionalUI();
+            initDarkModePreference();
+            setMinDatePendaftaran();
+            
+            if (isAdminLoggedIn) {
+                renderInternalTables();
+            }
+        });
+
+        // 1. NAVIGATION & SINGLE PAGE ROUTING
+        function showPage(pageId, sectionId = null) {
+            const views = ['home', 'informasi', 'profil', 'internal'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const mainHeader = document.getElementById('main-header');
+            const mainFooter = document.getElementById('main-footer');
+
+            if (pageId === 'internal') {
+                if (mainHeader) mainHeader.classList.add('hidden');
+                if (mainFooter) mainFooter.classList.add('hidden');
+            } else {
+                if (mainHeader) mainHeader.classList.remove('hidden');
+                if (mainFooter) mainFooter.classList.remove('hidden');
+            }
+
+            const targetView = document.getElementById(`view-${pageId}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            // Otomatis berpindah tab jika membuka halaman Informasi Pasien
+            if (pageId === 'informasi' && sectionId) {
+            switchInfoTab(sectionId);
+           }
+
+            if (sectionId) {
+                setTimeout(() => {
+                    const sec = document.getElementById(sectionId);
+                    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function switchInfoTab(tab) {
+            const btnJadwal = document.getElementById('tab-btn-jadwal');
+            const btnPendaftaran = document.getElementById('tab-btn-pendaftaran');
+            const contentJadwal = document.getElementById('tab-content-jadwal');
+            const contentPendaftaran = document.getElementById('tab-content-pendaftaran');
+
+            if (tab === 'jadwal') {
+                btnJadwal.className = "py-3 px-8 text-sm font-bold border-b-2 border-maroon text-maroon transition flex items-center space-x-2";
+                btnPendaftaran.className = "py-3 px-8 text-sm font-bold border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-maroon transition flex items-center space-x-2";
+                contentJadwal.classList.remove('hidden');
+                contentPendaftaran.classList.add('hidden');
+            } else {
+                btnPendaftaran.className = "py-3 px-8 text-sm font-bold border-b-2 border-maroon text-maroon transition flex items-center space-x-2";
+                btnJadwal.className = "py-3 px-8 text-sm font-bold border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-maroon transition flex items-center space-x-2";
+                contentPendaftaran.classList.remove('hidden');
+                contentJadwal.classList.add('hidden');
+            }
+        }
+
+        function switchAdminTab(tab) {
+            const tabs = ['overview', 'pendaftaran', 'dokter', 'fasilitas', 'pengaduan'];
+            tabs.forEach(t => {
+                const nav = document.getElementById(`admin-nav-${t}`);
+                const sec = document.getElementById(`admin-sec-${t}`);
+                if (nav) {
+                    if (t === tab) {
+                        nav.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl bg-maroon text-white font-semibold transition";
+                    } else {
+                        nav.className = "w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition";
+                    }
+                }
+                if (sec) {
+                    if (t === tab || (tab === 'overview' && (t === 'pendaftaran' || t === 'pengaduan'))) {
+                        sec.classList.remove('hidden');
+                    } else {
+                        sec.classList.add('hidden');
+                    }
+                }
+            });
+
+            const headerTitle = document.getElementById('admin-header-title');
+            if (headerTitle) {
+                if (tab === 'overview') headerTitle.innerText = "Dashboard Admin Overview";
+                else if (tab === 'pendaftaran') headerTitle.innerText = "Kelola Antrean Pendaftaran Pasien";
+                else if (tab === 'dokter') headerTitle.innerText = "Kelola Master Data Dokter";
+                else if (tab === 'fasilitas') headerTitle.innerText = "Kelola Fasilitas Rumah Sakit";
+                else if (tab === 'pengaduan') headerTitle.innerText = "Kelola Data Pengaduan";
+            }
+        }
+
+        // 2. LOGIK DOKTER & JADWAL
+        function populateDokterSelect() {
+            const select = document.getElementById('reg-dokter');
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Pilih Dokter Spesialis --</option>';
+            dataDokter.forEach(doc => {
+                const opt = document.createElement('option');
+                opt.value = `${doc.nama} (${doc.spesialis})`;
+                opt.textContent = `${doc.nama} - ${doc.spesialis}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderJadwalDokter() {
+            const grid = document.getElementById('grid-dokter');
+            if (!grid) return;
+            const keyword = (document.getElementById('search-dokter')?.value || '').toLowerCase();
+            const filterHari = document.getElementById('filter-hari')?.value || '';
+
+            const filtered = dataDokter.filter(d => {
+                const matchName = d.nama.toLowerCase().includes(keyword) || d.spesialis.toLowerCase().includes(keyword);
+                const matchHari = filterHari === '' || d.hari.includes(filterHari) || d.hari.includes('Setiap Hari');
+                return matchName && matchHari;
+            });
+
+            grid.innerHTML = '';
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-2 text-center py-8 text-xs text-gray-400">Dokter tidak ditemukan.</div>`;
+                return;
+            }
+
+            filtered.forEach(doc => {
+                grid.innerHTML += `
+                    <div class="bg-gray-50 dark:bg-gray-700/40 p-4 rounded-xl border border-gray-100 dark:border-gray-700 flex items-start justify-between">
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-xs">${doc.nama}</h4>
+                            <p class="text-[11px] font-semibold text-maroon dark:text-red-400">${doc.spesialis}</p>
+                            <p class="text-[10px] text-gray-500 dark:text-gray-400 flex items-center space-x-1 pt-1">
+                                <i data-lucide="clock" class="w-3 h-3"></i>
+                                <span>${doc.hari} | ${doc.jam}</span>
+                            </p>
+                        </div>
+                        <button onclick="pilihDokterPendaftaran('${doc.nama} (${doc.spesialis})')" class="bg-maroon hover:bg-maroon-hover text-white px-3 py-1.5 rounded-lg text-[10px] font-bold transition">
+                            Daftar
+                        </button>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function pilihDokterPendaftaran(val) {
+            showPage('informasi');
+            switchInfoTab('pendaftaran');
+            const select = document.getElementById('reg-dokter');
+            if (select) select.value = val;
+        }
+
+        // 3. BMI CALCULATOR
+        function hitungkanBMI(e) {
+            e.preventDefault();
+            const w = parseFloat(document.getElementById('bmi-weight').value);
+            const h = parseFloat(document.getElementById('bmi-height').value) / 100;
+            if (!w || !h) return;
+
+            const bmi = (w / (h * h)).toFixed(1);
+            const scoreEl = document.getElementById('bmi-score');
+            const statusEl = document.getElementById('bmi-status');
+
+            scoreEl.innerText = bmi;
+            if (bmi < 18.5) {
+                statusEl.innerText = "Kekurangan Berat Badan (Underweight)";
+                statusEl.className = "text-xs font-bold text-amber-600 dark:text-amber-400";
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                statusEl.innerText = "Berat Badan Normal (Ideal)";
+                statusEl.className = "text-xs font-bold text-emerald-600 dark:text-emerald-400";
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                statusEl.innerText = "Kelebihan Berat Badan (Overweight)";
+                statusEl.className = "text-xs font-bold text-amber-600 dark:text-amber-400";
+            } else {
+                statusEl.innerText = "Obesitas (Obese)";
+                statusEl.className = "text-xs font-bold text-red-600 dark:text-red-400";
+            }
+        }
+
+        // 4. FORM PENDAFTARAN & PENGADUAN PASIEN
+        function setMinDatePendaftaran() {
+            const input = document.getElementById('reg-tanggal');
+            if (input) {
+                const today = new Date().toISOString().split('T')[0];
+                input.min = today;
+            }
+        }
+
+        function submitPendaftaran(e) {
+            e.preventDefault();
+            const nama = document.getElementById('reg-nama').value;
+            const nik = document.getElementById('reg-nik').value;
+            const kategori = document.getElementById('reg-kategori').value;
+            const bayar = document.getElementById('reg-bayar').value;
+            const dokter = document.getElementById('reg-dokter').value;
+            const tanggal = document.getElementById('reg-tanggal').value;
+
+            const antreanNo = "A-" + String(pendaftaranList.length + 1).padStart(3, '0');
+            const data = { id: Date.now(), no: antreanNo, nama, nik, kategori, bayar, dokter, tanggal };
+
+            pendaftaranList.push(data);
+            localStorage.setItem('rs_pendaftaran', JSON.stringify(pendaftaranList));
+
+            document.getElementById('tiket-no').innerText = antreanNo;
+            document.getElementById('tiket-info').innerText = `${nama} | ${dokter} | ${tanggal}`;
+            document.getElementById('tiket-pendaftaran').classList.remove('hidden');
+
+            document.getElementById('form-pendaftaran').reset();
+            if (isAdminLoggedIn) renderInternalTables();
+        }
+
+        function submitPengaduan(e) {
+            e.preventDefault();
+            const nama = document.getElementById('aduan-nama').value || 'Anonim';
+            const kategori = document.getElementById('aduan-kategori').value;
+            const isi = document.getElementById('aduan-isi').value;
+
+            const tiketId = "ADU-" + Math.floor(1000 + Math.random() * 9000);
+            const data = { id: tiketId, nama, kategori, isi, date: new Date().toLocaleDateString('id-ID') };
+
+            pengaduanList.push(data);
+            localStorage.setItem('rs_pengaduan', JSON.stringify(pengaduanList));
+
+            document.getElementById('tiket-aduan-id').innerText = tiketId;
+            document.getElementById('status-pengaduan').classList.remove('hidden');
+
+            document.getElementById('form-pengaduan').reset();
+            if (isAdminLoggedIn) renderInternalTables();
+        }
+
+        function cetakTiket(elementId) {
+            const printContent = document.getElementById(elementId).innerHTML;
+            const originalContent = document.body.innerHTML;
+            document.body.innerHTML = `<div style="padding:40px; text-align:center; font-family:sans-serif;">${printContent}</div>`;
+            window.print();
+            document.body.innerHTML = originalContent;
+            location.reload();
+        }
+
+        // 5. AUTHENTICATION & MODAL SYSTEM
+        function handleAuthButtonClick() {
+            if (isAdminLoggedIn) {
+                showPage('internal');
+            } else if (currentUser) {
+                if (confirm(`Logged in sebagai Pasien: ${currentUser.nama}. Klik OK untuk Logout.`)) {
+                    currentUser = null;
+                    localStorage.removeItem('rs_user');
+                    updateAuthUI();
+                }
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('modal-login').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('modal-login').classList.add('hidden');
+        }
+
+        function switchRoleTab(role) {
+            const btnPasien = document.getElementById('role-btn-pasien');
+            const btnAdmin = document.getElementById('role-btn-admin');
+            const contentPasien = document.getElementById('role-content-pasien');
+            const contentAdmin = document.getElementById('role-content-admin');
+
+            if (role === 'pasien') {
+                btnPasien.className = "flex-1 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm text-maroon transition flex items-center justify-center space-x-1";
+                btnAdmin.className = "flex-1 py-2 rounded-lg hover:text-maroon transition flex items-center justify-center space-x-1";
+                contentPasien.classList.remove('hidden');
+                contentAdmin.classList.add('hidden');
+            } else {
+                btnAdmin.className = "flex-1 py-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm text-maroon transition flex items-center justify-center space-x-1";
+                btnPasien.className = "flex-1 py-2 rounded-lg hover:text-maroon transition flex items-center justify-center space-x-1";
+                contentAdmin.classList.remove('hidden');
+                contentPasien.classList.add('hidden');
+            }
+        }
+
+        function toggleAuthForm(type) {
+            if (type === 'register') {
+                document.getElementById('box-login').classList.add('hidden');
+                document.getElementById('box-register').classList.remove('hidden');
+            } else {
+                document.getElementById('box-register').classList.add('hidden');
+                document.getElementById('box-login').classList.remove('hidden');
+            }
+        }
+
+        function submitLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            currentUser = { email, nama: email.split('@')[0] };
+            localStorage.setItem('rs_user', JSON.stringify(currentUser));
+            closeLoginModal();
+            updateAuthUI();
+            alert(`Selamat datang kembali, ${currentUser.nama}!`);
+        }
+
+        function submitRegister(e) {
+            e.preventDefault();
+            const nama = document.getElementById('reg-nama-user').value;
+            const email = document.getElementById('reg-email-user').value;
+            currentUser = { nama, email };
+            localStorage.setItem('rs_user', JSON.stringify(currentUser));
+            closeLoginModal();
+            updateAuthUI();
+            alert(`Akun berhasil dibuat. Selamat datang, ${nama}!`);
+        }
+
+        function submitAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('admin-user').value;
+            const p = document.getElementById('admin-pass').value;
+
+            if (u === 'admin' && p === 'admin123') {
+                isAdminLoggedIn = true;
+                localStorage.setItem('rs_admin_logged', 'true');
+                closeLoginModal();
+                updateAuthUI();
+                showPage('internal');
+                renderInternalTables();
+            } else {
+                alert("Username atau Password Admin Salah!");
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            localStorage.removeItem('rs_admin_logged');
+            updateAuthUI();
+            showPage('home');
+        }
+
+        function updateAuthUI() {
+            const btnTxt = document.getElementById('txt-portal-btn');
+            if (!btnTxt) return;
+
+            if (isAdminLoggedIn) {
+                btnTxt.innerText = "Dashboard Admin";
+            } else if (currentUser) {
+                btnTxt.innerText = currentUser.nama;
+            } else {
+                btnTxt.innerText = "Masuk / Login";
+            }
+        }
+
+        // 6. MANAGEMENT ADMIN DASHBOARD
+        function renderInternalTables() {
+            // Stats
+            document.getElementById('stat-total-pendaftaran').innerText = pendaftaranList.length;
+            document.getElementById('stat-total-pengaduan').innerText = pengaduanList.length;
+            document.getElementById('stat-total-dokter').innerText = dataDokter.length;
+
+            // Table Pendaftaran
+            const tbodyPendaftaran = document.getElementById('tabel-internal-pendaftaran');
+            const searchPen = (document.getElementById('admin-search-pendaftaran')?.value || '').toLowerCase();
+            
+            if (tbodyPendaftaran) {
+                tbodyPendaftaran.innerHTML = '';
+                const filteredP = pendaftaranList.filter(p => p.nama.toLowerCase().includes(searchPen) || p.nik.toLowerCase().includes(searchPen));
+                
+                if (filteredP.length === 0) {
+                    tbodyPendaftaran.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-400">Belum ada antrean pendaftaran.</td></tr>`;
+                } else {
+                    filteredP.forEach(p => {
+                        tbodyPendaftaran.innerHTML += `
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                <td class="p-3 font-bold text-maroon dark:text-red-400">${p.no}</td>
+                                <td class="p-3 font-semibold text-gray-900 dark:text-white">${p.nama}</td>
+                                <td class="p-3">${p.nik}</td>
+                                <td class="p-3"><span class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-[10px] font-bold">${p.kategori}</span></td>
+                                <td class="p-3">${p.dokter}</td>
+                                <td class="p-3">${p.tanggal}</td>
+                                <td class="p-3 text-center">
+                                    <button onclick="hapusPendaftaran(${p.id})" class="text-red-500 hover:text-red-700 font-bold text-[11px]">Hapus</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+
+            // Table Dokter
+            const tbodyDokter = document.getElementById('tabel-internal-dokter');
+            if (tbodyDokter) {
+                tbodyDokter.innerHTML = '';
+                dataDokter.forEach(d => {
+                    tbodyDokter.innerHTML += `
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                            <td class="p-3 font-semibold text-gray-900 dark:text-white">${d.nama}</td>
+                            <td class="p-3 text-maroon dark:text-red-400 font-semibold">${d.spesialis}</td>
+                            <td class="p-3">${d.hari}</td>
+                            <td class="p-3">${d.jam}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="hapusDokter(${d.id})" class="text-red-500 hover:text-red-700 font-bold text-[11px]">Hapus</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // Table Pengaduan
+            const tbodyPengaduan = document.getElementById('tabel-internal-pengaduan');
+            if (tbodyPengaduan) {
+                tbodyPengaduan.innerHTML = '';
+                if (pengaduanList.length === 0) {
+                    tbodyPengaduan.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">Belum ada pengaduan.</td></tr>`;
+                } else {
+                    pengaduanList.forEach(p => {
+                        tbodyPengaduan.innerHTML += `
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                <td class="p-3 font-bold text-amber-600 dark:text-amber-400">${p.id}</td>
+                                <td class="p-3 font-semibold text-gray-900 dark:text-white">${p.nama}</td>
+                                <td class="p-3"><span class="px-2 py-0.5 rounded bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 text-[10px] font-bold">${p.kategori}</span></td>
+                                <td class="p-3 text-gray-600 dark:text-gray-300 max-w-xs truncate">${p.isi}</td>
+                                <td class="p-3 text-center">
+                                    <button onclick="hapusPengaduan('${p.id}')" class="text-red-500 hover:text-red-700 font-bold text-[11px]">Hapus</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+        }
+
+        function hapusPendaftaran(id) {
+            if (!confirm('Hapus data antrean ini?')) return;
+            pendaftaranList = pendaftaranList.filter(p => p.id !== id);
+            localStorage.setItem('rs_pendaftaran', JSON.stringify(pendaftaranList));
+            renderInternalTables();
+        }
+
+        function hapusPengaduan(id) {
+            if (!confirm('Hapus pengaduan ini?')) return;
+            pengaduanList = pengaduanList.filter(p => p.id !== id);
+            localStorage.setItem('rs_pengaduan', JSON.stringify(pengaduanList));
+            renderInternalTables();
+        }
+
+        function tambahDokterBaru(e) {
+            e.preventDefault();
+            const nama = document.getElementById('add-doc-nama').value;
+            const spesialis = document.getElementById('add-doc-spesialis').value;
+            const hari = document.getElementById('add-doc-hari').value;
+            const jam = document.getElementById('add-doc-jam').value;
+
+            const doc = { id: Date.now(), nama, spesialis, hari, jam };
+            dataDokter.push(doc);
+            localStorage.setItem('rs_dokter_list', JSON.stringify(dataDokter));
+
+            populateDokterSelect();
+            renderJadwalDokter();
+            renderInternalTables();
+            e.target.reset();
+            alert('Dokter baru berhasil ditambahkan!');
+        }
+
+        function hapusDokter(id) {
+            if (!confirm('Hapus dokter dari sistem?')) return;
+            dataDokter = dataDokter.filter(d => d.id !== id);
+            localStorage.setItem('rs_dokter_list', JSON.stringify(dataDokter));
+            populateDokterSelect();
+            renderJadwalDokter();
+            renderInternalTables();
+        }
+
+        function tambahFasilitasBaru(e) {
+            e.preventDefault();
+            const nama = document.getElementById('add-fasilitas-nama').value;
+            const desc = document.getElementById('add-fasilitas-desc').value;
+            const icon = document.getElementById('add-fasilitas-icon').value;
+
+            const container = document.getElementById('container-fasilitas');
+            if (container) {
+                container.innerHTML += `
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-start space-x-4 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="${icon}" class="w-6 h-6"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm">${nama}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">${desc}</p>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+            e.target.reset();
+            alert('Fasilitas baru berhasil ditampilkan di website!');
+        }
+
+        function toggleStatusOperasional() {
+            statusOperasionalRS = statusOperasionalRS === 'Operational' ? 'Sistem Maintenance' : 'Operational';
+            localStorage.setItem('rs_status_ops', statusOperasionalRS);
+            updateStatusOperasionalUI();
+        }
+
+        function updateStatusOperasionalUI() {
+            const btn = document.getElementById('btn-status-operasional');
+            if (!btn) return;
+            if (statusOperasionalRS === 'Operational') {
+                btn.innerText = "Status: Operational";
+                btn.className = "px-3 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 text-xs font-bold rounded-full border border-emerald-200 dark:border-emerald-800 transition hover:scale-105";
+            } else {
+                btn.innerText = "Status: Maintenance";
+                btn.className = "px-3 py-1 bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 text-xs font-bold rounded-full border border-amber-200 dark:border-amber-800 transition hover:scale-105";
+            }
+        }
+
+        function exportToCSV(type) {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            if (type === 'pendaftaran') {
+                csvContent += "No Antrean,Nama,NIK,Kategori,Dokter,Tanggal\n";
+                pendaftaranList.forEach(p => {
+                    csvContent += `"${p.no}","${p.nama}","${p.nik}","${p.kategori}","${p.dokter}","${p.tanggal}"\n`;
+                });
+            } else {
+                csvContent += "ID Tiket,Nama,Kategori,Isi Pengaduan\n";
+                pengaduanList.forEach(p => {
+                    csvContent += `"${p.id}","${p.nama}","${p.kategori}","${p.isi.replace(/\n/g, ' ')}"\n`;
+                });
+            }
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `export_${type}_rs_bhayangkara.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 7. DARK MODE TOGGLE
+        function initDarkModePreference() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+</body>
+</html>
