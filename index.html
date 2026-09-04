@@ -756,7 +756,7 @@
 <!-- DAFTAR FASILITAS -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="container-fasilitas">
 <!-- Laboratorium -->
-<div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition group"><div class="h-44 overflow-hidden bg-gray-100 dark:bg-gray-700"><img alt="Laboratorium 24 Jam" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" src="laboratorium.jpg"/></div><div class="p-5 flex items-start space-x-4">
+<div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition group"><div class="h-44 overflow-hidden bg-gray-100 dark:bg-gray-700"><img alt="Laboratorium 24 Jam" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" src="assets/images/laboratorium.jpg"/></div><div class="p-5 flex items-start space-x-4">
 <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
 <i class="w-6 h-6" data-lucide="flask-conical"></i>
 </div>
@@ -816,7 +816,7 @@
 </div>
 </div></div>
 <!-- Radiologi -->
-<div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition group"><div class="h-44 overflow-hidden bg-gray-100 dark:bg-gray-700"><img alt="Radiologi dan USG" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" src="usg.jpg"/></div><div class="p-5 flex items-start space-x-4">
+<div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition group"><div class="h-44 overflow-hidden bg-gray-100 dark:bg-gray-700"><img alt="assets/images/usg.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" src="assets/images/radiologi.jpg"/></div><div class="p-5 flex items-start space-x-4">
 <div class="w-12 h-12 bg-red-50 dark:bg-red-950/50 text-maroon rounded-xl flex items-center justify-center flex-shrink-0">
 <i class="w-6 h-6" data-lucide="activity"></i>
 </div>
@@ -1098,7 +1098,7 @@
 <section class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm grid grid-cols-1 md:grid-cols-[18rem_1fr] gap-6 items-start" id="layanan-igd">
 
 <div class="w-full md:w-72 h-52 md:h-56 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100 dark:border-gray-700 shadow-sm">
-<img src="penunjang.jpg" alt="Foto layanan RS Bhayangkara Akpol" class="w-full h-full object-cover" />
+<img src="bacgkroun-rsb-akpol.jpeg" alt="Foto layanan RS Bhayangkara Akpol" class="w-full h-full object-cover" />
 </div>
 
 <div class="flex flex-col md:flex-row gap-6 items-start">
@@ -1142,7 +1142,7 @@
 <!-- MCU -->
 <section class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm grid grid-cols-1 md:grid-cols-[18rem_1fr] gap-6 items-start" id="layanan-mcu">
 <div class="w-full md:w-72 h-52 md:h-56 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100 dark:border-gray-700 shadow-sm">
-<img src="mcu.jpeg" alt="Foto layanan RS Bhayangkara Akpol" class="w-full h-full object-cover" />
+<img alt="Medical Check Up" src="assets/images/mcu.jpeg"class="w-full h-full object-cover" />
 </div>
 
 <div class="flex flex-col md:flex-row gap-6 items-start">
@@ -1194,7 +1194,7 @@
 <section class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm grid grid-cols-1 md:grid-cols-[18rem_1fr] gap-6 items-start" id="layanan-fasilitas">
 
 <div class="w-full md:w-72 h-52 md:h-56 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100 dark:border-gray-700 shadow-sm">
-<img src="penunjang.jpg" alt="Foto layanan RS Bhayangkara Akpol" class="w-full h-full object-cover" />
+<img src="assets/images/penunjang.jpg" alt="Foto layanan RS Bhayangkara Akpol" class="w-full h-full object-cover" />
 </div>
 
 <div class="space-y-6">
@@ -3948,9 +3948,9 @@ window.addEventListener('storage', function(event) {
         dataFasilitas = dataFasilitas.map(f => f.nama === 'Ruang Rawat Inap & ICU' ? {...f, foto:'assets/images/rawat-inap.jpeg'} : f);
         dataFasilitas = dataFasilitas.map(f => f.nama === 'Ambulans Gawat Darurat' ? {...f, foto:'assets/images/ambulans-gawat-darurat.jpeg'} : f);
         dataFasilitas = dataFasilitas.map(f => f.nama === 'Poliklinik Spesialis' ? {...f, foto:'assets/images/poliklinik-spesialis.jpeg'} : f);
-        dataFasilitas = dataFasilitas.map(f => f.nama === 'Laboratorium 24 Jam' ? {...f, foto:'laboratorium.jpg'} : f);
-        dataFasilitas = dataFasilitas.map(f => f.nama === 'Radiologi & USG' ? {...f, foto:'usg.jpg'} : f);
-        dataFasilitas = dataFasilitas.map(f => f.nama === 'Radiologi & X-Ray' ? {...f, foto:'x-ray.jpg'} : f);
+        dataFasilitas = dataFasilitas.map(f => f.nama === 'Laboratorium 24' ? {...f, foto:'assets/images/laboratorium.jpg'} : f);
+        dataFasilitas = dataFasilitas.map(f => f.nama === 'Radiologi & USG' ? {...f, foto:'assets/images/usg.jpg'} : f);
+        dataFasilitas = dataFasilitas.map(f => f.nama === 'Radiologi & X-Ray' ? {...f, foto:'assets/images/x-ray.jpg'} : f);
         localStorage.setItem('rs_fasilitas_list', JSON.stringify(dataFasilitas));
         let fotoFasilitasEdit = '';
 
@@ -4092,11 +4092,6 @@ window.addEventListener('storage', function(event) {
                 localStorage.setItem('rs_fasilitas_list', JSON.stringify(savedData));
             }
             dataFasilitas = JSON.parse(localStorage.getItem('rs_fasilitas_list') || '[]');
-            // Sinkronkan foto fasilitas bawaan agar laptop/browser lain tidak memakai foto lama dari localStorage.
-            dataFasilitas = dataFasilitas.map(f => f.nama === 'Laboratorium 24 Jam' ? {...f, foto:'laboratorium.jpg'} : f);
-            dataFasilitas = dataFasilitas.map(f => f.nama === 'Radiologi & USG' ? {...f, foto:'usg.jpg'} : f);
-            dataFasilitas = dataFasilitas.map(f => f.nama === 'Radiologi & X-Ray' ? {...f, foto:'x-ray.jpg'} : f);
-            localStorage.setItem('rs_fasilitas_list', JSON.stringify(dataFasilitas));
             renderFasilitasSemua();
         }
         if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initFasilitasData); else initFasilitasData();
@@ -4107,8 +4102,8 @@ window.addEventListener('storage', function(event) {
         const layananDefault = [
             {id:'layanan-rawat-inap', nama:'Rawat Inap', desc:'Layanan rawat inap ditujukan bagi pasien yang membutuhkan perawatan dan pemantauan medis secara berkala selama masa pemulihan.', icon:'bed', foto:'assets/images/rawat-inap.jpeg'},
             {id:'layanan-igd', nama:'IGD 24 Jam', desc:'Instalasi Gawat Darurat memberikan pelayanan untuk kondisi medis yang membutuhkan penanganan segera dan cepat. Layanan IGD tersedia selama 24 jam.', icon:'ambulance', foto:'igd.jpeg'},
-            {id:'layanan-mcu', nama:'Medical Check Up (MCU)', desc:'Medical Check Up merupakan layanan pemeriksaan kesehatan untuk mengetahui kondisi kesehatan secara menyeluruh dan membantu mendeteksi gangguan kesehatan sejak dini.', icon:'clipboard-check', foto:'mcu.jpeg'},
-            {id:'layanan-fasilitas', nama:'Fasilitas Penunjang', desc:'Fasilitas penunjang yang mendukung proses pemeriksaan dan pelayanan kesehatan pasien.', icon:'building-2', foto:'penunjang.jpg'}
+            {id:'layanan-mcu', nama:'Medical Check Up (MCU)', desc:'Medical Check Up merupakan layanan pemeriksaan kesehatan untuk mengetahui kondisi kesehatan secara menyeluruh dan membantu mendeteksi gangguan kesehatan sejak dini.', icon:'clipboard-check', foto:'bacgkroun-rsb-akpol.jpeg'},
+            {id:'layanan-fasilitas', nama:'Fasilitas Penunjang', desc:'Fasilitas penunjang yang mendukung proses pemeriksaan dan pelayanan kesehatan pasien.', icon:'building-2', foto:'bacgkroun-rsb-akpol.jpeg'}
         ];
         let dataLayanan = JSON.parse(localStorage.getItem('rs_layanan_list') || 'null') || layananDefault;
         dataLayanan = dataLayanan.map(l => l.id === 'layanan-rawat-inap' ? {...l, foto:'assets/images/rawat-inap.jpeg'} : l);
@@ -4147,22 +4142,7 @@ window.addEventListener('storage', function(event) {
         function tutupModalEditLayanan(){const m=document.getElementById('modal-edit-layanan');if(m){m.classList.add('hidden');m.classList.remove('flex');}}
         function hapusLayanan(id){const l=dataLayanan.find(x=>x.id===id);if(!l)return;if(!confirm(`Hapus layanan "${l.nama}"?`))return;dataLayanan=dataLayanan.filter(x=>x.id!==id);localStorage.setItem('rs_layanan_list',JSON.stringify(dataLayanan));renderLayananSemua();}
         document.getElementById('modal-edit-layanan')?.addEventListener('click',e=>{if(e.target.id==='modal-edit-layanan')tutupModalEditLayanan();});
-        function initLayananData(){
-            let saved=JSON.parse(localStorage.getItem('rs_layanan_list')||'null');
-            if(!Array.isArray(saved)) saved=layananDefault.map(x=>({...x}));
-            // Keep the two static service photos synchronized across different laptops.
-            const mcu=saved.find(x=>x.id==='layanan-mcu');
-            if(mcu) mcu.foto='mcu.jpeg';
-            const fasilitas=saved.find(x=>x.id==='layanan-fasilitas');
-            if(fasilitas) fasilitas.foto='penunjang.jpg';
-            const igd=saved.find(x=>x.id==='layanan-igd');
-            if(igd) igd.foto='igd.jpeg';
-            const rawat=saved.find(x=>x.id==='layanan-rawat-inap');
-            if(rawat) rawat.foto='assets/images/rawat-inap.jpeg';
-            localStorage.setItem('rs_layanan_list',JSON.stringify(saved));
-            dataLayanan=saved;
-            renderLayananSemua();
-        }
+        function initLayananData(){if(!localStorage.getItem('rs_layanan_list'))localStorage.setItem('rs_layanan_list',JSON.stringify(layananDefault));dataLayanan=JSON.parse(localStorage.getItem('rs_layanan_list')||'[]');const igd=dataLayanan.find(x=>x.id==='layanan-igd');if(igd){igd.foto='igd.jpeg';localStorage.setItem('rs_layanan_list',JSON.stringify(dataLayanan));}renderLayananSemua();}
         if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initLayananData);else initLayananData();
 
         function updateStatusOperasionalUI() {
